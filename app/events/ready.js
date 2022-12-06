@@ -3,11 +3,11 @@ module.exports = {
     once: true,
     init: async () => {
         logger.info('Ready!', 'Discord');
-        discordClient.user.setActivity('starting VPNing');
+        client.user.setActivity('starting VPNing');
 
-        const guilds = await discordClient.guilds.cache;
+        const guilds = await client.guilds.cache;
 
-        logger.info(`Logged in as ${discordClient.user.tag}!`, 'Bot');
+        logger.info(`Logged in as ${client.user.tag}!`, 'Bot');
         logger.info(`Currently in ${guilds.size} guilds.`, 'Bot');
     }
 }

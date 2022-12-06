@@ -23,7 +23,7 @@ module.exports = {
                 let slt = require(`${__basedir}/app/components/select_menus/${select}`);
                 logger.info(`load ./app/components/select_menus/${select}`, 'SelectMenus');
 
-                client.selectMenus.set(slt.name, slt);
+                client.selectMenus.set(slt.name || select.replace('.js', ''), slt);
             } catch (error) {
                 logger.error(`can't load ./app/components/select_menus/${select} - ${error}`, 'SelectMenus');
             }
@@ -38,7 +38,7 @@ module.exports = {
                 let btn = require(`${__basedir}/app/components/buttons/${button}`);
                 logger.info(`load ./app/components/buttons/${button}`, 'Buttons');
 
-                client.buttons.set(btn.name, btn);
+                client.buttons.set(btn.name || button.replace('.js', ''), btn);
             } catch (error) {
                 logger.error(`can't load ./app/components/buttons/${button} - ${error}`, 'Buttons');
             }
@@ -53,7 +53,7 @@ module.exports = {
                 let mdl = require(`${__basedir}/app/components/modals/${modal}`);
                 logger.info(`load ./app/components/modals/${modal}`, 'Modals');
 
-                client.modals.set(mdl.name, mdl);
+                client.modals.set(mdl.name || modal.replace('.js', ''), mdl);
             } catch (error) {
                 logger.error(`can't load ./app/components/modals/${modal} - ${error}`, 'Modals');
             }
@@ -79,6 +79,26 @@ module.exports = {
 
             } catch (error) {
                 logger.error(`can't load ./commands/${command} - ${error}`, 'Commands');
+            }
+        }
+    },
+    loadEvents: async () => {
+        const events = fs.readdirSync(`${__basedir}/app/events`).filter(file => file.endsWith(".js"));
+        if (events.length === 0 ) return logger.warning(`no files file in ./app/events`, 'Events');
+
+        for (let event of events) {
+            try {
+                let evt = require(`${__basedir}/app/events/${event}`);
+                logger.info(`load ./app/events/${event}`, 'Events');
+                if (evt.active) {
+                    if (evt.once) {
+                        client.once(evt.name || event.replace('.js', ''), evt.init);
+                    } else {
+                        client.on(evt.name || event.replace('.js', ''), evt.init);
+                    }
+                }
+            } catch (error) {
+                logger.error(`can't load ./app/events/${event} - ${error}`, 'Events');
             }
         }
     }

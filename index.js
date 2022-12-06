@@ -43,5 +43,8 @@ loaders.loadCommands();
 // Load Components
 loaders.loadComponents();
 
+// Load Events
+loaders.loadEvents();
+
 // Run Discord Client
 client.login(process.env.DISCORD_BOT_TOKEN);
