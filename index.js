@@ -43,6 +43,9 @@ loaders.loadCommands();
 // Load Components
 loaders.loadComponents();
 
+// Load Interaction Handler
+require('./app/handlers/interaction')();
+
 // Load Events
 loaders.loadEvents();
 
