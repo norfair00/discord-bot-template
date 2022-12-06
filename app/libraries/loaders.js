@@ -101,5 +101,28 @@ module.exports = {
                 logger.error(`can't load ./app/events/${event} - ${error}`, 'Events');
             }
         }
-    }
+    },
+    loadSchedulers : () => {
+        client.once('ready', async () => {
+            const schedules = fs.readdirSync(`${__basedir}/app/schedules`).filter(file => file.endsWith(".js"));
+            if (schedules.length === 0 ) return logger.warning(`no files in ./app/schedules`, 'Schedulers');
+
+            for (let schedule of schedules) {
+                try {
+                    let sdl = require(`${__basedir}/app/schedules/${schedule}`);
+                    if (sdl.active) {
+                        const crontNextRun = moment(cronParser.parseExpression(sdl.cron, { tz: 'Europe/Paris' }).next().toDate());
+                        logger.info(`load ./app/schedules/${schedule} next run ${crontNextRun.fromNow()}`, 'Schedulers');
+                        if (sdl.runAtStart) {
+                            if (client.isReady()) { return logger.info(`Discord not ready`, 'Schedulers'); }
+                            sdl.task();
+                        }
+                        nodeSchedule.scheduleJob(sdl.cron, sdl.task);
+                    }
+                } catch (error) {
+                    logger.error(`can't load ./app/schedules/${schedule} - ${error}`, 'Schedulers');
+                }
+            }
+        });
+    },
 }

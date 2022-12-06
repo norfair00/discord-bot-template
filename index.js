@@ -43,6 +43,9 @@ loaders.loadCommands();
 // Load Components
 loaders.loadComponents();
 
+// Load Schedulers
+loaders.loadSchedulers();
+
 // Load Interaction Handler
 require('./app/handlers/interaction')();
 
