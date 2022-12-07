@@ -117,7 +117,7 @@ module.exports = {
                             if (client.isReady()) { return logger.info(`Discord not ready`, 'Schedulers'); }
                             sdl.task();
                         }
-                        nodeSchedule.scheduleJob(sdl.cron || schedule.replace('.js', '').toLowerCase(), sdl.task);
+                        nodeSchedule.scheduleJob(sdl.cron, sdl.task);
                     }
                 } catch (error) {
                     logger.error(`can't load ./app/schedules/${schedule} - ${error}`, 'Schedulers');
