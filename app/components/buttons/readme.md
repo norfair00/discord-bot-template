@@ -5,7 +5,7 @@
 const { ButtonBuilder, ButtonStyle } = require('discord.js');
 
 module.exports = {
-    name: 'ping_button', // not required, bot can use file name in lowaercase
+    name: 'ping_button', // optional, bot can use file name in lowaercase
     builder: new ButtonBuilder()
 		.setCustomId('ping_button')
 		.setLabel('Click Me!')
