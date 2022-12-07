@@ -1,4 +1,4 @@
-# Modal template
+# Event template
 [Events Documentation](https://discord.js.org/#/docs/discord.js/main/typedef/Events)
 
 ```javascript

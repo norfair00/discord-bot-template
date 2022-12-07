@@ -1,4 +1,4 @@
-# Button template
+# Select Menu template
 [Documentation](https://discord.js.org/#/docs/builders/main/class/SelectMenuBuilder)
 
 ```javascript
