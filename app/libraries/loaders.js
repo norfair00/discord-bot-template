@@ -23,7 +23,7 @@ module.exports = {
                 let slt = require(`${__basedir}/app/components/select_menus/${select}`);
                 logger.info(`load ./app/components/select_menus/${select}`, 'SelectMenus');
 
-                client.selectMenus.set(slt.name || select.replace('.js', ''), slt);
+                client.selectMenus.set(slt.name || select.replace('.js', '').toLowerCase(), slt);
             } catch (error) {
                 logger.error(`can't load ./app/components/select_menus/${select} - ${error}`, 'SelectMenus');
             }
@@ -38,7 +38,7 @@ module.exports = {
                 let btn = require(`${__basedir}/app/components/buttons/${button}`);
                 logger.info(`load ./app/components/buttons/${button}`, 'Buttons');
 
-                client.buttons.set(btn.name || button.replace('.js', ''), btn);
+                client.buttons.set(btn.name || button.replace('.js', '').toLowerCase(), btn);
             } catch (error) {
                 logger.error(`can't load ./app/components/buttons/${button} - ${error}`, 'Buttons');
             }
@@ -53,7 +53,7 @@ module.exports = {
                 let mdl = require(`${__basedir}/app/components/modals/${modal}`);
                 logger.info(`load ./app/components/modals/${modal}`, 'Modals');
 
-                client.modals.set(mdl.name || modal.replace('.js', ''), mdl);
+                client.modals.set(mdl.name || modal.replace('.js', '').toLowerCase(), mdl);
             } catch (error) {
                 logger.error(`can't load ./app/components/modals/${modal} - ${error}`, 'Modals');
             }
@@ -72,7 +72,7 @@ module.exports = {
                 logger.info(`load ./app/commands/${command}`, 'Commands');
 
                 if ('data' in cmd && 'execute' in cmd) {
-                    client.commands.set(cmd.data.name, cmd);
+                    client.commands.set(cmd.data.name || command.replace('.js', '').toLowerCase(), cmd);
                 } else {
                     logger.error(`[WARNING] The command at ./app/commands/${command} is missing a required "data" or "execute" property.`, 'Commands');
                 }
