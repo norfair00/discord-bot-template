@@ -20,21 +20,7 @@ global.loaders = require("./app/libraries/loaders");
 
 // Discord Client
 global.client = new Client({
-    intents: [
-        GatewayIntentBits.GuildPresences,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.GuildMessageReactions,
-        GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildScheduledEvents,
-        GatewayIntentBits.GuildVoiceStates,
-        GatewayIntentBits.DirectMessages,
-        GatewayIntentBits.MessageContent,
-        GatewayIntentBits.DirectMessageReactions,
-        GatewayIntentBits.GuildBans,
-        GatewayIntentBits.GuildEmojisAndStickers,
-        GatewayIntentBits.GuildIntegrations,
-        GatewayIntentBits.GuildInvites
-    ]
+    intents: process.env.DISCORD_BOT_INTENTS.split(",").map((intent) => GatewayIntentBits[intent])
 });
 
 // Load Commands
