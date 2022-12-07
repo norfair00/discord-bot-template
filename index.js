@@ -7,7 +7,7 @@ const path = require("path");
 
 // Load NPM modules
 const Logger                                    = require("@ptkdev/logger");
-const { Client, Collection, GatewayIntentBits } = require("discord.js");
+const { Client, Collection, GatewayIntentBits, Partials } = require("discord.js");
 
 // Global variables
 global.__basedir = __dirname;
@@ -20,7 +20,8 @@ global.loaders = require("./app/libraries/loaders");
 
 // Discord Client
 global.client = new Client({
-    intents: process.env.DISCORD_BOT_INTENTS.split(",").map((intent) => GatewayIntentBits[intent])
+    intents: process.env.DISCORD_BOT_INTENTS.split(",").map((intent) => GatewayIntentBits[intent]),
+    partials: process.env.DISCORD_BOT_PARTIALS.split(",").map((partial) => Partials[partial])
 });
 
 // Load Commands
