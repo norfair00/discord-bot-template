@@ -7,16 +7,18 @@ const { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } = req
 
 module.exports = {
     name: 'echo_modal', // optional, bot can use file name in lowaercase
-    inputs_builder: new ActionRowBuilder().addComponents([
+    inputs_builder: [new ActionRowBuilder().addComponents(
         new TextInputBuilder()
 			.setCustomId('favoriteColorInput')
 			.setLabel("What's your favorite color?")
-			.setStyle(TextInputStyle.Short),
+			.setStyle(TextInputStyle.Short)
+    ),
+    new ActionRowBuilder().addComponents(
         new TextInputBuilder()
 			.setCustomId('hobbiesInput')
 			.setLabel("What's some of your favorite hobbies?")
 			.setStyle(TextInputStyle.Paragraph)
-    ]),
+    )],
     builder: new ModalBuilder()
 		.setCustomId('echo_modal')
 		.setTitle('Echo')

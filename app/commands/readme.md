@@ -11,5 +11,8 @@ module.exports = {
 	async execute(interaction) {
 		await interaction.reply('Pong!');
 	},
+	async autocomplete(interaction) { // https://discordjs.guide/slash-commands/autocomplete.html
+		await interaction.reply('Pong!');
+	}
 };
 ```

@@ -1,25 +1,29 @@
 {
-  "name": "discord-bot-template",
+  "name": "Bot",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cross-env NODE_ENV=development nodemon index.js",
+    "dev-cmd": "cross-env NODE_ENV=development node registerCommands.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.36.0",
+    "nodemon": "^2.0.21"
+  },
   "dependencies": {
     "@ptkdev/logger": "^1.8.0",
-    "axios": "^1.2.1",
-    "cron-parser": "^4.7.0",
+    "axios": "^1.3.4",
+    "cron": "^2.3.0",
+    "cron-parser": "^4.8.1",
+    "cross-env": "^7.0.3",
+    "digz": "^1.1.10",
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3",
     "moment": "^2.29.4",
-    "node-schedule": "^2.1.0",
-    "yaml": "^2.1.3"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.20"
+    "node-schedule": "^2.1.1"
   }
 }

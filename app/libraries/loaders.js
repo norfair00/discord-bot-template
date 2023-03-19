@@ -4,12 +4,12 @@ const fs = require("fs");
 // Load NPM modules
 const moment         = require("moment");
 const cronParser     = require('cron-parser');
-const nodeSchedule   = require('node-schedule');
+const CronJob        = require('cron').CronJob;
 
 const { Collection } = require("discord.js");
 
 module.exports = {
-    loadComponents: async () => {
+    loadComponents: () => {
         client.selectMenus = new Collection();
         client.buttons = new Collection();
         client.modals = new Collection();
@@ -59,7 +59,8 @@ module.exports = {
             }
         }
     },
-    loadCommands: async () => {
+    // This code loads commands from a directory and creates a collection of them, logging any errors or warnings encountered during the process.
+    loadCommands: () => {
         client.commands = new Collection();
 
         // Commands
@@ -82,7 +83,7 @@ module.exports = {
             }
         }
     },
-    loadEvents: async () => {
+    loadEvents: () => {
         const events = fs.readdirSync(`${__basedir}/app/events`).filter(file => file.endsWith(".js"));
         if (events.length === 0 ) return logger.warning(`no files file in ./app/events`, 'Events');
 
@@ -113,11 +114,8 @@ module.exports = {
                     if (sdl.active) {
                         const crontNextRun = moment(cronParser.parseExpression(sdl.cron, { tz: 'Europe/Paris' }).next().toDate());
                         logger.info(`load ./app/schedules/${schedule} next run ${crontNextRun.fromNow()}`, 'Schedulers');
-                        if (sdl.runAtStart) {
-                            if (client.isReady()) { return logger.info(`Discord not ready`, 'Schedulers'); }
-                            sdl.task();
-                        }
-                        nodeSchedule.scheduleJob(sdl.cron, sdl.task);
+
+                        new CronJob( sdl.cron, sdl.task, null, true, sdl.timezone || 'Europe/Paris', null, sdl.runAtStart || false, null, null );
                     }
                 } catch (error) {
                     logger.error(`can't load ./app/schedules/${schedule} - ${error}`, 'Schedulers');
